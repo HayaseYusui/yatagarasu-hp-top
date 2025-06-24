@@ -18,7 +18,7 @@
       </div>
       <div class="hero-content">
         <!-- <h1 class="text-h2 white--text font-weight-bold">八咫烏</h1>
-        <p class="text-subtitle-1 white--text">公安対魔特務六課</p> -->
+        <p class="text-subtitle-1 white--text">公安対魔特務六課</div> -->
         <v-img class="logo-image" src="/image/Yatagarasu_Logo.webp"></v-img>
       </div>
     </section>
@@ -28,7 +28,9 @@
       <div
         v-for="(bg, i) in backgrounds"
         :key="i"
-        :style="{ backgroundImage: `url(/image/${bg})` }"
+        :style="{
+          backgroundImage: `url(/image/${bg})`,
+        }"
         :ref="el => bgRefs[i] = el as HTMLElement"
         class="background-image"
       ></div>
@@ -37,13 +39,30 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="text-h4 font-weight-bold">守り抜け、この世界の理を</h2>
-            <p>
-              当サイトは、VRChat上で活動するクリエイティブプロジェクト、「公安対魔特務六課八咫烏」の公式HPです。
-            </p>
-            <p>
-              　架空の警察「八咫烏」をテーマに映像・音楽・３Ｄモデルの制作・脚本製作などを通した創作活動を行っています。
-            </p>
+            <h2 class="header-content text-h4 font-weight-bold my-6">
+              守り抜け、この世界の理を
+            </h2>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              当サイトは、VRChat上で活動するクリエイティブプロジェクト、「公安対魔特務六課八咫烏」の公式HPです
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              　架空の警察「八咫烏」をテーマに映像・音楽・３Ｄモデルの制作・脚本製作などを通した創作活動を行っています
+            </div>
+            <div class="child-content">
+              <v-carousel
+                hide-delimiters
+                height="320"
+                cycle
+                show-arrows="hover"
+                class="my-8"
+              >
+                <v-carousel-item
+                  v-for="(img, i) in carouselImages"
+                  :key="i"
+                  :src="img"
+                />
+              </v-carousel>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -52,15 +71,42 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="text-h4 font-weight-bold">「八咫烏」とは</h2>
-            <p>
-              西暦2044年、東京。<br />
-              魔特六課「八咫烏」は神祇省に設置される法執行機関。一般の警察などの法執行機関が対処しきれない存在「怪異」が事件・事故を起こす時、その処理に八咫烏が派遣される。<br />
-              公安と名が付いているが、職務の便宜上公安と名乗っているに過ぎない。揮系統は警察庁、そして国家公安委員会から完全に独立し、直接の命令は神祇省祭祀課が執り行う。<br />
-              八咫烏の装備は、平安時代から受け継がれる陰陽師の技術を現代風にアレンジし、ジャケットやライフルに怪異に対する効果を付与している。<br />
-              部隊を構成する隊員のほとんどを10～20代の少女が大半を占めている。大人と比較して霊的な存在との結びつきが強い少女たちは、怪異に干渉する能力が高い。さらに隊員の一部は妖や怪異の結びつきが強くなりすぎて、妖怪と一つになった存在、所謂「半妖」となった個体もいる。<br />
-              半妖となった個体は現行の法律では定義が難しく、祭祀課は彼女らを保護する役割も担っている。
-            </p>
+            <h2 class="header-content text-h4 font-weight-bold my-6">
+              「八咫烏」とは
+            </h2>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              ──西暦2044年、東京
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              目に見えぬ恐怖、理を超えた存在——「怪異」
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              その脅威は、日常の隙間から静かに世界を蝕んでいた
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              人々が知らぬその裏側で、ある機関が動いていた
+            </div>
+            <div class="child-content text-h6 font-weight-bold mb-4">
+              「神祇省（じんぎしょう）」
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              祭祀と祓いを統べる、国家直属の超常対策行政機関。
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              そこには、平安より続く秘術と、現代の科学を融合させた者たちがいる
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              弾丸を筆頭に現代化された個人装備
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              時には科学技術さえも取り込んだ「最新の陰陽師」たち
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              その名は──
+            </div>
+            <div class="child-content text-h6 font-weight-bold mb-4">
+              公安対魔特務六課《八咫烏》
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -70,19 +116,15 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="text-h4 font-weight-bold">
-              「舞台八咫烏 過去編」再公演決定！
+            <h2 class="header-content text-h4 font-weight-bold my-6">
+              お知らせ
             </h2>
-            <p>7月5日 22:00 開演！</p>
-            <p>魔特六課八咫烏 Group+にて開催します。miyabi_12にJoin！</p>
-            <v-img
-              src="https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp"
-              @click="
-                openX(
-                  `https://x.com/m_yata_official/status/1936257778177524118`
-                )
-              "
-            />
+            <div class="child-content">
+              <EventList
+                :googleApiKey="googleApiKey"
+                :historyCalendarId="historyCalendarId"
+              />
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -92,7 +134,27 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="text-h4 font-weight-bold">お知らせ</h2>
+            <h2 class="header-content text-h4 font-weight-bold my-6">NEWS</h2>
+            <h5 class="child-content text-h5 font-weight-bold mb-10">
+              「舞台八咫烏 過去編」再公演決定！
+            </h5>
+            <div class="child-content text-body-1 text-medium-emphasis mb-4">
+              7月5日 22:00 開演！
+            </div>
+            <div class="child-content text-body-1 text-medium-emphasis mb-10">
+              魔特六課八咫烏 Group+にて開催します。miyabi_12にJoin！
+            </div>
+            <div class="child-content mb-10">
+              <v-img
+                class="section-image"
+                src="https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp"
+                @click="
+                  openX(
+                    `https://x.com/m_yata_official/status/1936257778177524118`
+                  )
+                "
+              />
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -100,7 +162,12 @@
 
     <v-footer class="text-center d-flex flex-column ga-2 py-4 z-10">
       <div class="d-flex ga-3">
-        <v-btn icon="mdi-twitter" density="comfortable" variant="text"></v-btn>
+        <v-btn
+          icon="mdi-twitter"
+          density="comfortable"
+          variant="text"
+          @click="openX(`https://x.com/m_yata_official`)"
+        ></v-btn>
       </div>
       <v-divider class="my-2" thickness="2" width="50"></v-divider>
       <div class="text-caption font-weight-regular opacity-60">
@@ -149,8 +216,11 @@ gsap.registerPlugin(ScrollTrigger);
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-onMounted(() => {
+const eventCalendarId = ref("");
+const historyCalendarId = ref("");
+const googleApiKey = ref("");
+const carouselImages: string[] = ref([]);
+onMounted(async () => {
   setLoading(true);
 
   const heroSection = document.querySelector(".hero-section");
@@ -196,7 +266,7 @@ onMounted(() => {
     if (!gsap) return;
     // テキストふわっと
     gsap.fromTo(
-      el.querySelector("h2"),
+      el.querySelector(".header-content"),
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -211,13 +281,14 @@ onMounted(() => {
     );
 
     gsap.fromTo(
-      el.querySelector("p"),
+      el.querySelectorAll(".child-content"),
       { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
         duration: 1,
         delay: 0.2,
+        stagger: 0.4,
         scrollTrigger: {
           trigger: el,
           start: "top 75%",
@@ -226,7 +297,27 @@ onMounted(() => {
       }
     );
   });
+
+  const response = await fetch(
+    "https://script.google.com/macros/s/AKfycbwNxpIkWmwe4Th9dpVEOY3foF4FVQVZQx93zJZNE0-SF_nnQS2Nka9qYfJk85FJ2vxK/exec"
+  );
+  const data = await response.json();
+  if (data) {
+    googleApiKey.value = data.googleApiKey;
+    eventCalendarId.value = data.eventCalendarId;
+    historyCalendarId.value = data.historyCalendarId;
+    carouselImages.value = (data.images || []).map(convertUrl);
+  }
 });
+
+// GoogleドライブURLを変換する関数
+function convertUrl(driveUrl: string): string {
+  const match = driveUrl.match(/file\/d\/([\w-]+)\/view\?/);
+  if (match && match[1]) {
+    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+  }
+  return driveUrl;
+}
 
 function openX(url) {
   window.open(url, "_blank", "noreferrer");
@@ -279,6 +370,17 @@ body {
   transition: opacity 0.5s ease;
 }
 
+.background-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* ここで暗さを調整 */
+  pointer-events: none;
+}
+
 .pinned-section {
   height: 100vh;
   display: flex;
@@ -294,6 +396,12 @@ body {
   width: 50vw;
   max-width: 800px;
   min-width: 370px;
+}
+
+.section-image {
+  height: 70vw;
+  max-height: 600px;
+  min-height: 370px;
 }
 
 .video-bg.youtube-bg {
