@@ -7,7 +7,7 @@
       </video> -->
       <div class="video-bg youtube-bg">
         <iframe
-          src="https://www.youtube.com/embed/pMzBmwQZfUM?si=3Njwzxvbp8Ua9yAZ&autoplay=1&mute=1"
+          src="https://www.youtube.com/embed/pMzBmwQZfUM?si=3Njwzxvbp8Ua9yAZ&autoplay=1&mute=1&playsinline=1&loop=1&controls=0&playlist=pMzBmwQZfUM"
           title="YouTube video player"
           frameborder="0"
           allow="autoplay; fullscreen"
