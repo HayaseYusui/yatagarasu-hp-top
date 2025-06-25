@@ -156,13 +156,6 @@ watch(loading, async (newVal) => {
     const tl1 = gsap.timeline();
     const tl = gsap.timeline();
     tl1
-      .to(accessText0.value, {
-        scrambleText: {
-          text: "K.A.I.N.T.",
-        },
-        duration: 1,
-        ease: "none",
-      })
       .to(accessText1.value, {
         scrambleText: {
           text: "Connecting...",
@@ -171,10 +164,18 @@ watch(loading, async (newVal) => {
       })
       .to(accessText2.value, {
         scrambleText: {
-          text: "Sign in...",
+          text: "Checking...",
         },
         ease: "none",
       });
+
+    tl.to(accessText0.value, {
+      scrambleText: {
+        text: "K.A.I.N.T.",
+      },
+      duration: 1,
+      ease: "none",
+    });
 
     paths.forEach((path, i) => {
       const length = path.getTotalLength();
@@ -189,7 +190,7 @@ watch(loading, async (newVal) => {
         path,
         {
           strokeDashoffset: 0,
-          duration: 0.07, // 描画速度
+          duration: 0.01, // 描画速度
           ease: "power1.out",
         },
         `+=${i === 0 ? 0 : 0.08}`

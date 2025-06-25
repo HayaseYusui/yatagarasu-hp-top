@@ -47,12 +47,12 @@
                       守り抜け、この世界の理を
                     </h1>
                     <p
-                      class="child-content text-subtitle-2 text-medium-emphasis mb-4"
+                      class="child-content text-body-1 text-medium-emphasis mb-4"
                     >
                       当サイトは、架空の警察「八咫烏」をテーマにVRChat上で活動するコミュニティ、
                     </p>
                     <p
-                      class="child-content text-subtitle-2 text-medium-emphasis mb-4"
+                      class="child-content text-body-1 text-medium-emphasis mb-4"
                     >
                       「神祇省公安対魔特務六課八咫烏」の公式HPです。
                     </p>
