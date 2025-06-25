@@ -1,65 +1,102 @@
 <template>
   <div class="event-list-scroll">
-    <div v-if="loading">取得中...</div>
+    <div v-if="props.events.length == 0" class="event-loading">
+      <v-skeleton-loader
+        type="list-item-two-line"
+        class="mb-3"
+        v-for="i in 4"
+        :key="i"
+        height="56"
+      />
+      <div class="d-flex justify-center">
+        <v-progress-circular indeterminate />
+      </div>
+    </div>
     <div v-else>
-      <div v-for="event in events" :key="event.id" class="event-item">
+      <div
+        v-for="event in events"
+        :key="new Date(event.timestamp).toLocaleString()"
+        class="event-item"
+      >
         <div class="event-header">
-          <span class="event-summary">{{ event.summary }}</span>
+          <v-chip
+            :color="event.category == 'お知らせ' ? 'secondary' : '#FFA726'"
+            text-color="white"
+            size="small"
+            label
+            :prepend-icon="
+              event.category == 'お知らせ'
+                ? 'mdi-information'
+                : event.category == 'イベント'
+                ? 'mdi-tag'
+                : 'mdi-tag'
+            "
+          >
+            {{ event.category }}
+          </v-chip>
           <span class="event-date">{{
-            event.start.date || event.start.dateTime
+            event.date
+              ? new Date(event.date).toLocaleDateString()
+              : new Date(event.timestamp).toLocaleDateString()
           }}</span>
         </div>
-        <div class="event-description" v-html="event.description"></div>
+        <div class="event-description" v-html="event.content"></div>
+        <div v-if="event.url" class="event-link mt-2">
+          <a
+            :href="event.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="event-link-btn"
+          >
+            詳細を見る
+            <v-icon size="18" class="ml-1">mdi-open-in-new</v-icon>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+type EventType = {
+  timestamp: string;
+  category: string;
+  content: string;
+  date: string;
+  url: string;
+};
 
 const props = defineProps<{
-  googleApiKey: string;
-  historyCalendarId: string;
+  events: EventType[];
 }>();
-
-const events = ref([]);
-const loading = ref(true);
-
-async function loadData() {
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${props.historyCalendarId}/events?key=${props.googleApiKey}&maxResults=1000&orderBy=startTime&singleEvents=true`;
-  const res = await fetch(url);
-  const data = await res.json();
-  events.value = data.items.reverse() || [];
-  loading.value = false;
-}
-
-watch(
-  () => props.historyCalendarId,
-  async () => {
-    if (props.historyCalendarId && props.googleApiKey) {
-      loadData();
-    }
-  }
-);
-
-watch(
-  () => props.googleApiKey,
-  async () => {
-    if (props.historyCalendarId && props.googleApiKey) {
-      loadData();
-    }
-  }
-);
 </script>
 
 <style scoped>
+.event-link-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #42a5f5;
+  text-decoration: underline;
+  font-size: 0.97em;
+  transition: color 0.2s;
+}
+.event-link-btn:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
 .event-list-scroll {
   max-height: 400px;
   overflow-y: auto;
   padding: 8px;
   background: rgba(20, 24, 32, 0.8);
   border-radius: 10px;
+}
+.event-loading {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .event-item {
   margin-bottom: 18px;
@@ -79,10 +116,6 @@ watch(
   font-weight: bold;
   font-size: 1.05em;
   margin-bottom: 4px;
-}
-.event-summary {
-  color: #fff;
-  letter-spacing: 0.02em;
 }
 .event-date {
   color: #b0b8c9;

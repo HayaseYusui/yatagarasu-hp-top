@@ -2,10 +2,7 @@
   <div>
     <!-- Hero Section with Video Background -->
     <section ref="hero" class="hero-section">
-      <!-- <video autoplay muted loop playsinline class="video-bg">
-        <source src="/video/space.mp4" type="video/mp4" />
-      </video> -->
-      <div class="video-bg youtube-bg">
+      <div class="video-bg">
         <iframe
           src="https://www.youtube.com/embed/pMzBmwQZfUM?si=3Njwzxvbp8Ua9yAZ&autoplay=1&mute=1&playsinline=1&loop=1&controls=0&playlist=pMzBmwQZfUM"
           title="YouTube video player"
@@ -13,78 +10,94 @@
           allow="autoplay; fullscreen"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
-          style="width: 100%; height: 100%; position: absolute; top: 0; left: 0"
         ></iframe>
       </div>
       <div class="hero-content">
-        <!-- <h1 class="text-h2 white--text font-weight-bold">八咫烏</h1>
-        <p class="text-subtitle-1 white--text">公安対魔特務六課</div> -->
         <v-img class="logo-image" src="/image/Yatagarasu_Logo.webp"></v-img>
       </div>
     </section>
 
-    <!-- Background Images (positioned absolutely behind content) -->
+    <!-- Background Images -->
     <div class="backgrounds">
       <div
         v-for="(bg, i) in backgrounds"
         :key="i"
         :style="{
-          backgroundImage: `url(/image/${bg})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(image/poster/${bg})`,
         }"
         :ref="el => bgRefs[i] = el as HTMLElement"
         class="background-image"
       ></div>
     </div>
-    <section ref="section0" class="pinned-section">
-      <v-container>
+
+    <!-- Content Section (セクション数=画像数) -->
+    <v-container>
+      <section ref="section1" class="pinned-section">
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="header-content text-h4 font-weight-bold my-6">
-              守り抜け、この世界の理を
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
+              イントロダクション
             </h2>
-            <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              当サイトは、VRChat上で活動するクリエイティブプロジェクト、「公安対魔特務六課八咫烏」の公式HPです
-            </div>
-            <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              　架空の警察「八咫烏」をテーマに映像・音楽・３Ｄモデルの制作・脚本製作などを通した創作活動を行っています
-            </div>
-            <div class="child-content">
-              <v-carousel
-                hide-delimiters
-                height="320"
-                cycle
-                show-arrows="hover"
-                class="my-8"
-              >
-                <v-carousel-item
-                  v-for="(img, i) in carouselImages"
-                  :key="i"
-                  :src="img"
-                />
-              </v-carousel>
+            <v-divider class="child-content mt-2 mb-6" />
+            <div class="child-content mb-4">
+              <v-row align="center">
+                <v-col class="text-center text-lg-left" cols="12" lg="6">
+                  <v-responsive class="mx-auto" max-width="500">
+                    <h1 class="text-h6 text-md-h5 font-weight-bold mb-4">
+                      守り抜け、この世界の理を
+                    </h1>
+                    <p
+                      class="child-content text-subtitle-2 text-medium-emphasis mb-4"
+                    >
+                      当サイトは、架空の警察「八咫烏」をテーマにVRChat上で活動するコミュニティ、
+                    </p>
+                    <p
+                      class="child-content text-subtitle-2 text-medium-emphasis mb-4"
+                    >
+                      「神祇省公安対魔特務六課八咫烏」の公式HPです。
+                    </p>
+                  </v-responsive>
+                </v-col>
+
+                <v-col cols="12" lg="6">
+                  <v-carousel
+                    cycle
+                    hide-delimiters
+                    height="auto"
+                    class="side-carousel"
+                  >
+                    <v-carousel-item
+                      v-for="(item, i) in carouselImages"
+                      :key="i"
+                      :src="item"
+                      height="auto"
+                    ></v-carousel-item>
+                  </v-carousel>
+                </v-col>
+              </v-row>
             </div>
           </v-col>
         </v-row>
-      </v-container>
-    </section>
-    <section ref="section1" class="pinned-section">
-      <v-container>
+      </section>
+
+      <section ref="section2" class="pinned-section">
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="header-content text-h4 font-weight-bold my-6">
-              「八咫烏」とは
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
+              世界観
             </h2>
+            <v-divider class="child-content mt-2 mb-6" />
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
               ──西暦2044年、東京
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              目に見えぬ恐怖、理を超えた存在——「怪異」
+              目に見えぬ恐怖、理を超えた存在──「怪異」
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
-              その脅威は、日常の隙間から静かに世界を蝕んでいた
+              その脅威は、日常の隙間から静かに世界を蝕んでいた。
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
-              人々が知らぬその裏側で、ある機関が動いていた
+              人々が知らぬその裏側で、ある機関が動いていた。
             </div>
             <div class="child-content text-h6 font-weight-bold mb-4">
               「神祇省（じんぎしょう）」
@@ -93,80 +106,207 @@
               祭祀と祓いを統べる、国家直属の超常対策行政機関。
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
-              そこには、平安より続く秘術と、現代の科学を融合させた者たちがいる
+              そこには、平安より続く秘術と、現代の科学を融合させた者たちがいる。
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              弾丸を筆頭に現代化された個人装備
+              弾丸を筆頭に現代化された個人装備、
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              時には科学技術さえも取り込んだ「最新の陰陽師」たち
+              時には科学技術さえも取り込んだ「最新の陰陽師」たち。
             </div>
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
               その名は──
             </div>
             <div class="child-content text-h6 font-weight-bold mb-4">
-              公安対魔特務六課《八咫烏》
+              特務六課《八咫烏》
             </div>
           </v-col>
         </v-row>
-      </v-container>
-    </section>
+      </section>
 
-    <section ref="section2" class="pinned-section">
-      <v-container>
+      <section ref="section3" class="pinned-section">
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="header-content text-h4 font-weight-bold my-6">
-              お知らせ
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
+              活動内容
+            </h2>
+            <v-divider class="child-content mt-2 mb-6" />
+            <div class="child-content mb-4">
+              <v-responsive class="text-center mx-auto" max-width="700">
+                <p class="mt-4 text-body-1 text-medium-emphasis">
+                  映像・音楽・３Ｄモデルの制作・脚本製作などを通した創作活動を行っています。
+                </p>
+              </v-responsive>
+              <v-row class="mt-8">
+                <v-col
+                  v-for="(item, i) in features"
+                  :key="i"
+                  class="d-flex"
+                  cols="12"
+                  md="4"
+                >
+                  <v-responsive class="mx-auto" max-width="500" width="100%">
+                    <v-list-item
+                      class="px-0"
+                      rounded="lg"
+                      :subtitle="item.subtitle"
+                    >
+                      <template #title>
+                        <p class="text-body-2 font-weight-bold pb-2">
+                          <v-icon class="mr-2" :icon="item.icon" size="small" />
+                          {{ item.title }}
+                        </p>
+                      </template>
+                      <v-chip
+                        append-icon="mdi-arrow-right"
+                        class="mt-6"
+                        link
+                        text="Learn more"
+                        @click="openWindow(item.link)"
+                      >
+                        サイトへ移動
+                      </v-chip>
+                    </v-list-item>
+                  </v-responsive>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+      </section>
+
+      <section ref="section4" class="pinned-section">
+        <v-row justify="center">
+          <v-col cols="12" md="8">
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
+              NEWS
+            </h2>
+            <v-divider class="child-content mt-2 mb-6" />
+            <div class="child-content mb-4">
+              <v-row dense>
+                <v-col cols="12" lg="6">
+                  <v-card class="mx-auto" max-width="400">
+                    <v-img
+                      class="align-end text-white"
+                      position="top"
+                      height="200"
+                      src="/image/poster/photocon.webp"
+                      cover
+                    >
+                      <v-card-title class="text-shadow-lg bg-black/50">
+                        フォトコンテスト終了！
+                      </v-card-title>
+                    </v-img>
+                    <v-card-subtitle class="pt-4">
+                      2025年5月度フォトコンテスト
+                    </v-card-subtitle>
+                    <v-card-text class="min-h-[6rem]">
+                      <div>詳細は公式Xアカウントのツリーをご確認ください。</div>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn
+                        color="orange"
+                        text="詳細"
+                        @click="
+                          openWindow(
+                            `https://x.com/m_yata_official/status/1934174601128595876`
+                          )
+                        "
+                      ></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" lg="6">
+                  <v-card class="mx-auto" max-width="400">
+                    <v-img
+                      class="align-end text-white"
+                      position="top"
+                      height="200"
+                      src="https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp"
+                      cover
+                    >
+                      <v-card-title class="text-shadow-lg bg-black/50">
+                        「舞台八咫烏 過去編」再公演！
+                      </v-card-title>
+                    </v-img>
+                    <v-card-subtitle class="pt-4">
+                      7月5日 22:00 開演！
+                    </v-card-subtitle>
+                    <v-card-text class="min-h-[6rem]">
+                      <div>魔特六課八咫烏 Group+にて開催します。</div>
+                      <div>miyabi_12にJoin！</div>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn
+                        color="orange"
+                        text="詳細"
+                        @click="
+                          openWindow(
+                            `https://x.com/m_yata_official/status/1936257778177524118`
+                          )
+                        "
+                      ></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+      </section>
+
+      <section ref="section5" class="pinned-section">
+        <v-row justify="center">
+          <v-col cols="12" md="8">
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold my-6">
+              新着情報
             </h2>
             <div class="child-content">
-              <EventList
-                :googleApiKey="googleApiKey"
-                :historyCalendarId="historyCalendarId"
-              />
+              <EventList :events="events" />
             </div>
           </v-col>
         </v-row>
-      </v-container>
-    </section>
+      </section>
 
-    <section ref="section3" class="pinned-section">
-      <v-container>
+      <section ref="section6" class="pinned-section">
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <h2 class="header-content text-h4 font-weight-bold my-6">NEWS</h2>
-            <h5 class="child-content text-h5 font-weight-bold mb-10">
-              「舞台八咫烏 過去編」再公演決定！
-            </h5>
-            <div class="child-content text-body-1 text-medium-emphasis mb-4">
-              7月5日 22:00 開演！
-            </div>
-            <div class="child-content text-body-1 text-medium-emphasis mb-10">
-              魔特六課八咫烏 Group+にて開催します。miyabi_12にJoin！
-            </div>
-            <div class="child-content mb-10">
-              <v-img
-                class="section-image"
-                src="https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp"
-                @click="
-                  openX(
-                    `https://x.com/m_yata_official/status/1936257778177524118`
-                  )
-                "
-              />
+            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
+              メンバー（一部）
+            </h2>
+            <v-divider class="child-content mt-2 mb-6" />
+            <div class="child-content mb-4">
+              <v-row justify="center">
+                <v-col v-for="(item, i) in members" :key="i" cols="12" sm="4">
+                  <v-list-item
+                    class="px-0"
+                    :subtitle="item.subtitle"
+                    :title="item.title"
+                  >
+                    <template #prepend>
+                      <v-avatar
+                        color="surface-light"
+                        :image="item.avatar"
+                        :size="120"
+                      />
+                    </template>
+                  </v-list-item>
+                </v-col>
+              </v-row>
             </div>
           </v-col>
         </v-row>
-      </v-container>
-    </section>
+      </section>
+    </v-container>
 
+    <!-- Footer Section -->
     <v-footer class="text-center d-flex flex-column ga-2 py-4 z-10">
       <div class="d-flex ga-3">
         <v-btn
           icon="mdi-twitter"
           density="comfortable"
           variant="text"
-          @click="openX(`https://x.com/m_yata_official`)"
+          @click="openWindow(`https://x.com/m_yata_official`)"
         ></v-btn>
       </div>
       <v-divider class="my-2" thickness="2" width="50"></v-divider>
@@ -187,41 +327,62 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { onMounted, ref } from "vue";
 import { useLoading } from "~/composables/useLoading";
+import { features, members } from "~/utils";
 
 const { setLoading } = useLoading();
 
-const sections = [
-  { title: "Our Mission", text: "To boldly go where few have gone before." },
-  { title: "The Experience", text: "Zero gravity, infinite views." },
-  {
-    title: "Safety First",
-    text: "Redundant systems and elite pilots ensure safety.",
-  },
-  { title: "Join Us", text: "Book your seat for the edge of space." },
+const backgrounds = [
+  "shibuya.webp",
+  "encount.webp",
+  "motor.webp",
+  "iori.webp",
+  "kurame.webp",
+  "tuihou.webp",
 ];
 
-const backgrounds = ["1.webp", "2.webp", "3.webp", "4.webp"];
-
-const section0 = ref<HTMLElement | null>(null);
 const section1 = ref<HTMLElement | null>(null);
 const section2 = ref<HTMLElement | null>(null);
 const section3 = ref<HTMLElement | null>(null);
+const section4 = ref<HTMLElement | null>(null);
+const section5 = ref<HTMLElement | null>(null);
+const section6 = ref<HTMLElement | null>(null);
 
-const sectionRefs = [section0, section1, section2, section3];
+const sectionRefs = [
+  section1,
+  section2,
+  section3,
+  section4,
+  section5,
+  section6,
+];
 const bgRefs = ref<HTMLElement[]>([]);
-const particlesSection = ref<HTMLElement | null>(null);
 
 gsap.registerPlugin(ScrollTrigger);
 
-function wait(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-const eventCalendarId = ref("");
-const historyCalendarId = ref("");
-const googleApiKey = ref("");
-const carouselImages: string[] = ref([]);
+type EventType = {
+  timestamp: string;
+  category: string;
+  content: string;
+  date: string;
+  url: string;
+};
+
+const carouselImages = ref([] as string[]);
+const events = ref([] as EventType[]);
+
+const LOADING_KEY = "lastLoadingTime";
+const minute = 10;
+const LOADING_INTERVAL_MS = minute * 60 * 1000;
+
 onMounted(async () => {
   setLoading(true);
+
+  const last = sessionStorage.getItem(LOADING_KEY);
+  const now = Date.now();
+  if (!last || now - Number(last) > LOADING_INTERVAL_MS) {
+    // setLoading(true);
+  }
+  sessionStorage.setItem(LOADING_KEY, now.toString());
 
   const heroSection = document.querySelector(".hero-section");
   if (heroSection) {
@@ -303,9 +464,7 @@ onMounted(async () => {
   );
   const data = await response.json();
   if (data) {
-    googleApiKey.value = data.googleApiKey;
-    eventCalendarId.value = data.eventCalendarId;
-    historyCalendarId.value = data.historyCalendarId;
+    events.value = (data.events || []).reverse();
     carouselImages.value = (data.images || []).map(convertUrl);
   }
 });
@@ -319,7 +478,7 @@ function convertUrl(driveUrl: string): string {
   return driveUrl;
 }
 
-function openX(url) {
+function openWindow(url: string) {
   window.open(url, "_blank", "noreferrer");
 }
 </script>
@@ -331,21 +490,12 @@ body {
 
 .hero-section {
   position: relative;
-  height: 100vh;
+  height: 120vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-.video-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 2;
 }
 .hero-content {
   z-index: 3;
@@ -365,24 +515,12 @@ body {
   height: 100%;
   background-size: cover;
   background-position: center;
-  filter: blur(1px);
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
-.background-image::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* ここで暗さを調整 */
-  pointer-events: none;
-}
-
 .pinned-section {
-  height: 100vh;
+  height: 120vh;
   display: flex;
   align-items: center;
   color: white;
@@ -404,19 +542,31 @@ body {
   min-height: 370px;
 }
 
-.video-bg.youtube-bg {
+.video-bg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   z-index: 2;
   pointer-events: none;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.video-bg.youtube-bg iframe {
-  width: 100%;
-  height: 100%;
+
+.video-bg iframe {
+  height: 100vh;
+  width: auto;
+  max-width: 177.78vh; /* 16:9比率で最大幅を制限 */
+  aspect-ratio: 16 / 9;
   pointer-events: none;
+  display: block;
+}
+
+.side-carousel {
+  width: auto;
+  height: auto;
 }
 </style>
