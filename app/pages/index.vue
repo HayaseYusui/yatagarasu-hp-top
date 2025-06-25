@@ -15,6 +15,9 @@
       <div class="hero-content">
         <v-img class="logo-image" src="/image/Yatagarasu_Logo.webp"></v-img>
       </div>
+      <div class="scroll-down-indicator-fixed">
+        <span class="arrow">&#x25BC;</span>
+      </div>
     </section>
 
     <!-- Background Images -->
@@ -390,6 +393,7 @@ onMounted(async () => {
       [
         heroSection.querySelector(".video-bg"),
         heroSection.querySelector(".hero-content"),
+        heroSection.querySelector(".scroll-down-indicator-fixed"),
       ],
       {
         opacity: 0,
@@ -568,5 +572,43 @@ body {
 .side-carousel {
   width: auto;
   height: auto;
+}
+
+.scroll-down-indicator-fixed {
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInOut 2s infinite;
+  user-select: none;
+  z-index: 10;
+}
+.arrow {
+  font-size: 2.2rem;
+  color: #fff;
+  animation: arrowBounce 1.2s infinite;
+  text-shadow: 0 2px 8px #000a;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes arrowBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12px);
+  }
 }
 </style>
