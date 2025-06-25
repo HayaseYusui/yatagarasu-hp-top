@@ -469,7 +469,10 @@ onMounted(async () => {
   const data = await response.json();
   if (data) {
     events.value = (data.events || []).reverse();
-    carouselImages.value = (data.images || []).map(convertUrl);
+    const shuffled = (data.images || [])
+      .slice()
+      .sort(() => Math.random() - 0.5);
+    carouselImages.value = shuffled.slice(0, 6).map(convertUrl);
   }
 });
 
