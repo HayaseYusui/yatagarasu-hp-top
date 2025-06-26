@@ -20,6 +20,15 @@
       </div>
     </section>
 
+    <div style="display: none">
+      <img
+        v-for="(item, i) in backgrounds"
+        :key="i"
+        :src="item"
+        @load="onImageLoad()"
+        @error="onImageLoad()"
+      />
+    </div>
     <!-- Background Images -->
     <div class="backgrounds">
       <div
@@ -63,6 +72,15 @@
                 </v-col>
 
                 <v-col cols="12" lg="6">
+                  <div style="display: none">
+                    <img
+                      v-for="(item, i) in carouselImages"
+                      :key="i"
+                      :src="item"
+                      @load="onImageLoad()"
+                      @error="onImageLoad()"
+                    />
+                  </div>
                   <v-carousel
                     cycle
                     hide-delimiters
@@ -271,7 +289,7 @@
         </v-row>
       </section>
 
-      <section ref="section6" class="pinned-section">
+      <section ref="section6" class="pinned-section mb-20 sm:mb-4">
         <v-row justify="center">
           <v-col cols="12" md="8">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
@@ -290,7 +308,7 @@
                       <v-avatar
                         color="surface-light"
                         :image="item.avatar"
-                        :size="120"
+                        :size="48"
                       />
                     </template>
                   </v-list-item>
@@ -330,9 +348,11 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { onMounted, ref } from "vue";
 import { useLoading } from "~/composables/useLoading";
+import { useProgress } from "~/composables/useProgress";
 import { features, members } from "~/utils";
 
 const { setLoading } = useLoading();
+const { initProgress, incrementProgress, forceFinish } = useProgress();
 
 const backgrounds = [
   "shibuya.webp",
@@ -373,106 +393,101 @@ type EventType = {
 const carouselImages = ref([] as string[]);
 const events = ref([] as EventType[]);
 
-const LOADING_KEY = "lastLoadingTime";
-const minute = 10;
-const LOADING_INTERVAL_MS = minute * 60 * 1000;
-
 onMounted(async () => {
+  initProgress(20); // 読み込み要素の総数。なるべくキリの良い数字で...(現在：写真6枚,写真13枚,fetch1箇所)
   setLoading(true);
 
-  const last = sessionStorage.getItem(LOADING_KEY);
-  const now = Date.now();
-  if (!last || now - Number(last) > LOADING_INTERVAL_MS) {
-    // setLoading(true);
-  }
-  sessionStorage.setItem(LOADING_KEY, now.toString());
+  try {
+    const heroSection = document.querySelector(".hero-section");
+    if (heroSection) {
+      gsap.to(
+        [
+          heroSection.querySelector(".video-bg"),
+          heroSection.querySelector(".hero-content"),
+          heroSection.querySelector(".scroll-down-indicator-fixed"),
+        ],
+        {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: heroSection,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    }
 
-  const heroSection = document.querySelector(".hero-section");
-  if (heroSection) {
-    gsap.to(
-      [
-        heroSection.querySelector(".video-bg"),
-        heroSection.querySelector(".hero-content"),
-        heroSection.querySelector(".scroll-down-indicator-fixed"),
-      ],
-      {
-        opacity: 0,
-        scrollTrigger: {
-          trigger: heroSection,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
+    sectionRefs.forEach((sectionRef, index) => {
+      const el = sectionRef.value;
+      if (!el) return;
+
+      // 背景切替（同じ）
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top center",
+        onEnter: () => {
+          bgRefs.value.forEach((bgEl, i) => {
+            if (!bgEl) return;
+            gsap.to(bgEl, { opacity: i === index ? 1 : 0, duration: 1 });
+          });
         },
-      }
-    );
-  }
+        onEnterBack: () => {
+          bgRefs.value.forEach((bgEl, i) => {
+            if (!bgEl) return;
+            gsap.to(bgEl, { opacity: i === index ? 1 : 0, duration: 1 });
+          });
+        },
+      });
+      if (!gsap) return;
+      // テキストふわっと
+      gsap.fromTo(
+        el.querySelector(".header-content"),
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 75%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
 
-  sectionRefs.forEach((sectionRef, index) => {
-    const el = sectionRef.value;
-    if (!el) return;
-
-    // 背景切替（同じ）
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top center",
-      onEnter: () => {
-        bgRefs.value.forEach((bgEl, i) => {
-          if (!bgEl) return;
-          gsap.to(bgEl, { opacity: i === index ? 1 : 0, duration: 1 });
-        });
-      },
-      onEnterBack: () => {
-        bgRefs.value.forEach((bgEl, i) => {
-          if (!bgEl) return;
-          gsap.to(bgEl, { opacity: i === index ? 1 : 0, duration: 1 });
-        });
-      },
+      gsap.fromTo(
+        el.querySelectorAll(".child-content"),
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.2,
+          stagger: 0.4,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 75%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
     });
-    if (!gsap) return;
-    // テキストふわっと
-    gsap.fromTo(
-      el.querySelector(".header-content"),
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 75%",
-          toggleActions: "play reverse play reverse",
-        },
-      }
-    );
 
-    gsap.fromTo(
-      el.querySelectorAll(".child-content"),
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.2,
-        stagger: 0.4,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 75%",
-          toggleActions: "play reverse play reverse",
-        },
-      }
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbwNxpIkWmwe4Th9dpVEOY3foF4FVQVZQx93zJZNE0-SF_nnQS2Nka9qYfJk85FJ2vxK/exec"
     );
-  });
-
-  const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbwNxpIkWmwe4Th9dpVEOY3foF4FVQVZQx93zJZNE0-SF_nnQS2Nka9qYfJk85FJ2vxK/exec"
-  );
-  const data = await response.json();
-  if (data) {
-    events.value = (data.events || []).reverse();
-    const shuffled = (data.images || [])
-      .slice()
-      .sort(() => Math.random() - 0.5);
-    carouselImages.value = shuffled.slice(0, 6).map(convertUrl);
+    const data = await response.json();
+    incrementProgress();
+    if (data) {
+      events.value = (data.events || []).reverse();
+      const shuffled = (data.images || [])
+        .slice()
+        .sort(() => Math.random() - 0.5);
+      carouselImages.value = shuffled.slice(0, 13).map(convertUrl);
+    }
+  } catch (error) {
+    forceFinish();
   }
 });
 
@@ -487,6 +502,10 @@ function convertUrl(driveUrl: string): string {
 
 function openWindow(url: string) {
   window.open(url, "_blank", "noreferrer");
+}
+
+function onImageLoad() {
+  incrementProgress();
 }
 </script>
 
@@ -580,7 +599,7 @@ body {
 .scroll-down-indicator-fixed {
   position: absolute;
   left: 50%;
-  top: 75%;
+  top: 70%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;

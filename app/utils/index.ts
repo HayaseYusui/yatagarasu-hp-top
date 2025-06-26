@@ -33,6 +33,26 @@ export const members = [
     subtitle: "Webエンジニア",
     avatar: "/image/avatar/yusui Face.webp",
   },
+  {
+    title: "empty",
+    subtitle: "",
+    avatar: "",
+  },
+  {
+    title: "empty",
+    subtitle: "",
+    avatar: "",
+  },
+  {
+    title: "empty",
+    subtitle: "",
+    avatar: "",
+  },
+  {
+    title: "empty",
+    subtitle: "",
+    avatar: "",
+  },
 ];
 
 export const features = [

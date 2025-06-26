@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <div class="loading-overlay6" v-if="loading">
+    <div class="loading-overlay6" v-if="fingerprintLoading">
       <NuxtParticles
         id="bg-particles"
         :options="lineParticleOptions as any"
@@ -133,100 +133,114 @@
 <script setup lang="ts">
 import gsap from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-import { useLoading } from "~/composables/useLoading";
+import { useProgress } from "~/composables/useProgress";
 import { lineParticleOptions } from "~/utils";
 
 gsap.registerPlugin(ScrambleTextPlugin);
-const { loading, setLoading } = useLoading();
 
 const authText = ref<HTMLElement | null>(null);
 const accessText0 = ref<HTMLElement | null>(null);
 const accessText1 = ref<HTMLElement | null>(null);
 const accessText2 = ref<HTMLElement | null>(null);
+const fingerprintLoading = ref(true);
 
-watch(loading, async (newVal) => {
-  if (newVal) {
-    await nextTick();
+const tlInit = gsap.timeline({ paused: true });
+const tlInit2 = gsap.timeline({ paused: true });
+const tlLoad = gsap.timeline({ paused: true });
+const tlProgress = gsap.timeline({ paused: true });
+const tlFinish = gsap.timeline({ paused: true });
 
-    const paths = document.querySelectorAll(
-      "#fingerprint-svg g path"
-    ) as NodeListOf<SVGPathElement>;
-    if (!paths) return;
+onMounted(() => {
+  fingerprintLoading.value = true;
+  tlInit.to(accessText0.value, {
+    scrambleText: {
+      text: "K.A.I.N.T.",
+    },
+    duration: 1,
+    ease: "none",
+  });
+  tlInit2.to(accessText1.value, {
+    scrambleText: {
+      text: "scanning...",
+    },
+    ease: "none",
+  });
+  tlLoad.to(accessText2.value, {
+    scrambleText: {
+      text: "preparing...",
+    },
+    ease: "none",
+  });
 
-    const tl1 = gsap.timeline();
-    const tl = gsap.timeline();
-    tl1
-      .to(accessText1.value, {
-        scrambleText: {
-          text: "Connecting...",
-        },
-        ease: "none",
-      })
-      .to(accessText2.value, {
-        scrambleText: {
-          text: "Checking...",
-        },
-        ease: "none",
-      });
+  const paths = document.querySelectorAll(
+    "#fingerprint-svg g path"
+  ) as NodeListOf<SVGPathElement>;
+  if (paths) {
+  }
+  paths.forEach((path, i) => {
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = `${length}`;
+    path.style.strokeDashoffset = `${length}`;
+    path.style.stroke = "#00bcd4";
+    path.style.fill = "hsl(0, 0%, 100%)";
 
-    tl.to(accessText0.value, {
-      scrambleText: {
-        text: "K.A.I.N.T.",
+    const progressObj = { p: 0 };
+
+    tlProgress.to(
+      path,
+      {
+        strokeDashoffset: 0,
+        duration: 10, // 描画速度
+        ease: "power1.out",
       },
-      duration: 1,
-      ease: "none",
-    });
+      `+=${i === 0 ? 0 : 1}`
+    );
 
-    paths.forEach((path, i) => {
-      const length = path.getTotalLength();
-      path.style.strokeDasharray = `${length}`;
-      path.style.strokeDashoffset = `${length}`;
-      path.style.stroke = "#00bcd4";
-      path.style.fill = "hsl(0, 0%, 100%)";
-
-      const progressObj = { p: 0 };
-
-      tl.to(
-        path,
-        {
-          strokeDashoffset: 0,
-          duration: 0.01, // 描画速度
-          ease: "power1.out",
+    tlProgress.to(
+      progressObj,
+      {
+        p: 1,
+        duration: 10,
+        ease: "power1.inOut",
+        onUpdate: () => {
+          const hue = 0 + (122 - 0) * progressObj.p;
+          const sat = 0 + (58 - 0) * progressObj.p;
+          const light = 100 - (100 - 58) * progressObj.p;
+          path.style.fill = `hsl(${hue}, ${sat}%, ${light}%)`;
         },
-        `+=${i === 0 ? 0 : 0.08}`
-      );
+      },
+      "-=0.18"
+    );
+  });
 
-      tl.to(
-        progressObj,
-        {
-          p: 1,
-          duration: 0.14,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            const hue = 0 + (122 - 0) * progressObj.p;
-            const sat = 0 + (58 - 0) * progressObj.p;
-            const light = 100 - (100 - 58) * progressObj.p;
-            path.style.fill = `hsl(${hue}, ${sat}%, ${light}%)`;
-          },
-        },
-        "-=0.18"
-      );
-    });
-
-    tl.to(authText.value, {
+  tlFinish
+    .to(authText.value, {
       scrambleText: {
         text: "ACCESS GRANTED",
         revealDelay: 0.5,
       },
       duration: 1.5,
       ease: "none",
-    }).to(".loading-overlay6", {
+    })
+    .to(".loading-overlay6", {
       opacity: 0,
-      duration: 1,
+      duration: 0.6,
       delay: 0.2,
-      onComplete: () => setLoading(false),
+      onComplete: () => {
+        fingerprintLoading.value = false;
+      },
     });
-  }
+
+  tlInit.play();
+  tlInit2.play();
+});
+
+const { progress } = useProgress();
+
+watch(progress, (val) => {
+  if (val) tlProgress.progress(val);
+  if (val >= 0.4) tlLoad.play();
+  if (val >= 1) tlFinish.play();
 });
 </script>
 <style>
@@ -255,7 +269,7 @@ watch(loading, async (newVal) => {
   margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-family: "Orbitron", monospace;
+  font-family: "Cyberdyne", monospace;
 }
 
 .auth-title-text {

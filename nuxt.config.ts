@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap",
+          href: "https://fonts.cdnfonts.com/css/cyberdyne",
           crossorigin: "",
         },
       ],
