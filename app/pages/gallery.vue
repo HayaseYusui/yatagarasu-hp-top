@@ -167,8 +167,6 @@ const selectedTab = ref(0);
 
 onMounted(async () => {
   setLoading(true);
-  const index = dates.value.findIndex((d) => d === currentMonth);
-  selectedTab.value = index !== -1 ? index : 0;
   try {
     const res = await fetch(
       "https://script.google.com/macros/s/AKfycbwPftyERFNn-asTDCMRREesFNQedglwoFO58mT8VIvbh2Pj5-Npo-XktqHRLYBZtjFKlw/exec"
@@ -177,9 +175,12 @@ onMounted(async () => {
     imageitems.value = images.map((img: any) => ({
       src: img.url,
       title: img.name && !isImageExtension(img.name) ? img.name : "",
-      date: img.updatedDate || "",
+      date: img.createdDate || "",
     }));
-  } catch (e) {}
+    selectedTab.value = dates.value.length > 0 ? dates.value.length - 1 : 0;
+  } catch (e) {
+    setLoading(false);
+  }
 });
 
 function isImageExtension(name: string) {
@@ -286,21 +287,23 @@ onBeforeUnmount(() => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center;  */
+  align-items: center;
 }
 
-/* .zoom-image {
-  max-width: none;
-  max-height: none;
+.zoom-image {
+  max-width: 100vw;
+  max-height: 100vh;
   user-select: none;
   pointer-events: none;
-} */
+  display: block;
+  margin: auto;
+}
 
 .close-btn {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
   z-index: 10;
 }

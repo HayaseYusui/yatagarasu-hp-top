@@ -152,22 +152,23 @@ const tlFinish = gsap.timeline({ paused: true });
 
 onMounted(() => {
   fingerprintLoading.value = true;
-  tlInit.to(accessText0.value, {
-    scrambleText: {
-      text: "K.A.I.N.T.",
-    },
-    duration: 1,
-    ease: "none",
-  });
-  tlInit2.to(accessText1.value, {
-    scrambleText: {
-      text: "scanning...",
-    },
-    ease: "none",
-  });
+  tlInit
+    .to(accessText0.value, {
+      scrambleText: {
+        text: "K.A.I.N.T.",
+      },
+      duration: 1,
+      ease: "none",
+    })
+    .to(accessText1.value, {
+      scrambleText: {
+        text: "scanning......",
+      },
+      ease: "none",
+    });
   tlLoad.to(accessText2.value, {
     scrambleText: {
-      text: "preparing...",
+      text: "preparing......",
     },
     ease: "none",
   });

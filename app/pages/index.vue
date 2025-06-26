@@ -20,7 +20,7 @@
       </div>
     </section>
 
-    <div style="display: none">
+    <div v-if="startPre" style="display: none">
       <img
         v-for="(item, i) in backgrounds"
         :key="i"
@@ -66,13 +66,13 @@
                     <p
                       class="child-content text-body-1 text-medium-emphasis mb-4"
                     >
-                      「神祇省公安対魔特務六課八咫烏」の公式HPです。
+                      「神祇省公安対魔特務六課 八咫烏」の公式HPです。
                     </p>
                   </v-responsive>
                 </v-col>
 
                 <v-col cols="12" lg="6">
-                  <div style="display: none">
+                  <div v-if="startPre" style="display: none">
                     <img
                       v-for="(item, i) in carouselImages"
                       :key="i"
@@ -84,6 +84,8 @@
                   <v-carousel
                     cycle
                     hide-delimiters
+                    show-arrows="hover"
+                    hide-delimiter-background
                     height="auto"
                     class="side-carousel"
                   >
@@ -392,6 +394,7 @@ type EventType = {
 
 const carouselImages = ref([] as string[]);
 const events = ref([] as EventType[]);
+const startPre = ref(false);
 
 onMounted(async () => {
   initProgress(20); // 読み込み要素の総数。なるべくキリの良い数字で...(現在：写真6枚,写真13枚,fetch1箇所)
@@ -478,6 +481,7 @@ onMounted(async () => {
       "https://script.google.com/macros/s/AKfycbwNxpIkWmwe4Th9dpVEOY3foF4FVQVZQx93zJZNE0-SF_nnQS2Nka9qYfJk85FJ2vxK/exec"
     );
     const data = await response.json();
+    startPre.value = true;
     incrementProgress();
     if (data) {
       events.value = (data.events || []).reverse();
