@@ -76,6 +76,23 @@ export const features = [
   },
 ];
 
+export const newsCards = [
+  {
+    img: "/image/poster/photocon.webp",
+    title: "フォトコンテスト終了！",
+    subtitle: "2025年5月度フォトコンテスト",
+    text: "詳細は公式Xアカウントのツリーをご確認ください。",
+    btnUrl: "https://x.com/m_yata_official/status/1934174601128595876",
+  },
+  {
+    img: "https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp",
+    title: "「舞台八咫烏 過去編」再公演！",
+    subtitle: "7月5日 22:00 開演！",
+    text: "魔特六課八咫烏 Group+にて開催します。<br>miyabi_12にJoin！",
+    btnUrl: "https://x.com/m_yata_official/status/1936257778177524118",
+  },
+];
+
 export const lineParticleOptions = {
   autoPlay: true,
   background: {

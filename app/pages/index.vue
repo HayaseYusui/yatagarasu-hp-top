@@ -207,67 +207,30 @@
             <v-divider class="child-content mt-2 mb-6" />
             <div class="child-content mb-4">
               <v-row dense>
-                <v-col cols="12" lg="6">
+                <v-col v-for="(card, i) in newsCards" :key="i" cols="12" lg="6">
                   <v-card class="mx-auto" max-width="400">
                     <v-img
                       class="align-end text-white"
                       position="top"
                       height="200"
-                      src="/image/poster/photocon.webp"
+                      :src="card.img"
                       cover
                     >
                       <v-card-title class="text-shadow-lg bg-black/50">
-                        フォトコンテスト終了！
+                        {{ card.title }}
                       </v-card-title>
                     </v-img>
                     <v-card-subtitle class="pt-4">
-                      2025年5月度フォトコンテスト
+                      {{ card.subtitle }}
                     </v-card-subtitle>
-                    <v-card-text class="min-h-[6rem]">
-                      <div>詳細は公式Xアカウントのツリーをご確認ください。</div>
+                    <v-card-text class="min-h-[5rem]">
+                      <div v-html="card.text"></div>
                     </v-card-text>
                     <v-card-actions>
                       <v-btn
                         color="orange"
                         text="詳細"
-                        @click="
-                          openWindow(
-                            `https://x.com/m_yata_official/status/1934174601128595876`
-                          )
-                        "
-                      ></v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" lg="6">
-                  <v-card class="mx-auto" max-width="400">
-                    <v-img
-                      class="align-end text-white"
-                      position="top"
-                      height="200"
-                      src="https://i.gyazo.com/303b15b3ef996d1a5183b495d014eb03.webp"
-                      cover
-                    >
-                      <v-card-title class="text-shadow-lg bg-black/50">
-                        「舞台八咫烏 過去編」再公演！
-                      </v-card-title>
-                    </v-img>
-                    <v-card-subtitle class="pt-4">
-                      7月5日 22:00 開演！
-                    </v-card-subtitle>
-                    <v-card-text class="min-h-[6rem]">
-                      <div>魔特六課八咫烏 Group+にて開催します。</div>
-                      <div>miyabi_12にJoin！</div>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn
-                        color="orange"
-                        text="詳細"
-                        @click="
-                          openWindow(
-                            `https://x.com/m_yata_official/status/1936257778177524118`
-                          )
-                        "
+                        @click="openWindow(card.btnUrl)"
                       ></v-btn>
                     </v-card-actions>
                   </v-card>
@@ -352,7 +315,7 @@ import { onMounted, ref } from "vue";
 import { useLoading } from "~/composables/useLoading";
 import { useProgress } from "~/composables/useProgress";
 import { features, members } from "~/utils";
-
+// useSnapScroll(".header-content");
 const { setLoading } = useLoading();
 const { initProgress, incrementProgress, forceFinish } = useProgress();
 
@@ -397,6 +360,8 @@ const events = ref([] as EventType[]);
 const startPre = ref(false);
 
 onMounted(async () => {
+  // レンダリング時にラグが発生した際のアニメーション調整機能を無効化
+  gsap.ticker.lagSmoothing(0);
   initProgress(20); // 読み込み要素の総数。なるべくキリの良い数字で...(現在：写真6枚,写真13枚,fetch1箇所)
   setLoading(true);
 
@@ -526,6 +491,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  scroll-snap-align: start;
 }
 .hero-content {
   z-index: 3;
@@ -558,6 +524,7 @@ body {
   background-color: transparent;
   position: relative;
   z-index: 2;
+  scroll-snap-align: start;
 }
 
 .logo-image {
