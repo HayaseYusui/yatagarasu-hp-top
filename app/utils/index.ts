@@ -35,22 +35,22 @@ export const members = [
   },
   {
     title: "empty",
-    subtitle: "",
+    subtitle: "3Dモデル作成 / ワールド作成",
     avatar: "",
   },
   {
     title: "empty",
-    subtitle: "",
+    subtitle: "3Dモデル作成 / ワールド作成",
     avatar: "",
   },
   {
     title: "empty",
-    subtitle: "",
+    subtitle: "3Dモデル作成 / ワールド作成",
     avatar: "",
   },
   {
     title: "empty",
-    subtitle: "",
+    subtitle: "3Dモデル作成 / ワールド作成",
     avatar: "",
   },
 ];

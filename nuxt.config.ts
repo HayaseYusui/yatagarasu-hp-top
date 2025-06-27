@@ -17,6 +17,11 @@ export default defineNuxtConfig({
           href: "https://fonts.cdnfonts.com/css/cyberdyne",
           crossorigin: "",
         },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap",
+          crossorigin: "",
+        },
       ],
     },
     pageTransition: { name: "page", mode: "out-in" },

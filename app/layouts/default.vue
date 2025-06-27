@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <div class="loading-overlay6" v-if="fingerprintLoading">
+    <div class="loading-overlay6" v-if="fingerprintLoading" @click="closeTl">
       <NuxtParticles
         id="bg-particles"
         :options="lineParticleOptions as any"
@@ -125,6 +125,7 @@
       <div class="auth-text loading-text" ref="accessText1">_</div>
       <div class="auth-text loading-text" ref="accessText2">_</div>
       <div class="auth-text loading-text" ref="authText">_</div>
+      <div class="auth-text loading-text" ref="authText2">_</div>
     </div>
     <slot />
   </v-app>
@@ -139,6 +140,7 @@ import { lineParticleOptions } from "~/utils";
 gsap.registerPlugin(ScrambleTextPlugin);
 
 const authText = ref<HTMLElement | null>(null);
+const authText2 = ref<HTMLElement | null>(null);
 const accessText0 = ref<HTMLElement | null>(null);
 const accessText1 = ref<HTMLElement | null>(null);
 const accessText2 = ref<HTMLElement | null>(null);
@@ -149,6 +151,7 @@ const tlInit2 = gsap.timeline({ paused: true });
 const tlLoad = gsap.timeline({ paused: true });
 const tlProgress = gsap.timeline({ paused: true });
 const tlFinish = gsap.timeline({ paused: true });
+const tlClose = gsap.timeline({ paused: true });
 
 onMounted(() => {
   fingerprintLoading.value = true;
@@ -223,14 +226,28 @@ onMounted(() => {
       duration: 1.5,
       ease: "none",
     })
-    .to(".loading-overlay6", {
-      opacity: 0,
-      duration: 0.6,
-      delay: 0.2,
-      onComplete: () => {
-        fingerprintLoading.value = false;
+    .to(authText2.value, {
+      scrambleText: {
+        text: "tap to screen",
       },
+      ease: "none",
+    })
+    .to(authText2.value, {
+      opacity: 0,
+      duration: 0.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
     });
+
+  tlClose.to(".loading-overlay6", {
+    opacity: 0,
+    duration: 0.6,
+    delay: 0.2,
+    onComplete: () => {
+      fingerprintLoading.value = false;
+    },
+  });
 
   tlInit.play();
   tlInit2.play();
@@ -243,6 +260,10 @@ watch(progress, (val) => {
   if (val >= 0.4) tlLoad.play();
   if (val >= 1) tlFinish.play();
 });
+
+function closeTl() {
+  tlClose.play();
+}
 </script>
 <style>
 .fingerprint {

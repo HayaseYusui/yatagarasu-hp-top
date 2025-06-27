@@ -46,17 +46,19 @@
     <v-container>
       <section ref="section1" class="pinned-section">
         <v-row justify="center">
-          <v-col cols="12" md="8">
-            <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
-              イントロダクション
+          <v-col cols="12" md="12">
+            <h2 class="header-content text-h2 text-md-h1 font-weight-bold mt-6">
+              守り抜け、この世界の理を
             </h2>
             <v-divider class="child-content mt-2 mb-6" />
             <div class="child-content mb-4">
               <v-row align="center">
                 <v-col class="text-center text-lg-left" cols="12" lg="6">
                   <v-responsive class="mx-auto" max-width="500">
-                    <h1 class="text-h6 text-md-h5 font-weight-bold mb-4">
-                      守り抜け、この世界の理を
+                    <h1
+                      class="child-content text-h6 text-md-h5 font-weight-bold mb-4"
+                    >
+                      イントロダクション
                     </h1>
                     <p
                       class="child-content text-body-1 text-medium-emphasis mb-4"
@@ -105,7 +107,7 @@
 
       <section ref="section2" class="pinned-section">
         <v-row justify="center">
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="12">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
               世界観
             </h2>
@@ -140,7 +142,7 @@
             <div class="child-content text-body-1 text-medium-emphasis mb-10">
               その名は──
             </div>
-            <div class="child-content text-h6 font-weight-bold mb-4">
+            <div class="child-content text-h5 font-weight-bold mb-4">
               特務六課《八咫烏》
             </div>
           </v-col>
@@ -149,7 +151,7 @@
 
       <section ref="section3" class="pinned-section">
         <v-row justify="center">
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="12">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
               活動内容
             </h2>
@@ -200,14 +202,14 @@
 
       <section ref="section4" class="pinned-section">
         <v-row justify="center">
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="12">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
               NEWS
             </h2>
             <v-divider class="child-content mt-2 mb-6" />
             <div class="child-content mb-4">
               <v-row dense>
-                <v-col v-for="(card, i) in newsCards" :key="i" cols="12" lg="6">
+                <v-col v-for="(card, i) in newsCards" :key="i" cols="12" sm="6">
                   <v-card class="mx-auto" max-width="400">
                     <v-img
                       class="align-end text-white"
@@ -223,7 +225,7 @@
                     <v-card-subtitle class="pt-4">
                       {{ card.subtitle }}
                     </v-card-subtitle>
-                    <v-card-text class="min-h-[5rem]">
+                    <v-card-text class="min-h-[8rem]">
                       <div v-html="card.text"></div>
                     </v-card-text>
                     <v-card-actions>
@@ -243,7 +245,7 @@
 
       <section ref="section5" class="pinned-section">
         <v-row justify="center">
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="12">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold my-6">
               新着情報
             </h2>
@@ -256,7 +258,7 @@
 
       <section ref="section6" class="pinned-section mb-20 sm:mb-4">
         <v-row justify="center">
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="12">
             <h2 class="header-content text-h4 text-md-h2 font-weight-bold mt-6">
               メンバー（一部）
             </h2>
@@ -273,7 +275,7 @@
                       <v-avatar
                         color="surface-light"
                         :image="item.avatar"
-                        :size="48"
+                        class="member-avatar"
                       />
                     </template>
                   </v-list-item>
@@ -531,6 +533,7 @@ body {
   width: 50vw;
   max-width: 800px;
   min-width: 370px;
+  margin-top: -20vh;
 }
 
 .section-image {
@@ -602,6 +605,34 @@ body {
   }
   50% {
     transform: translateY(12px);
+  }
+}
+
+.header-content {
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.child-content {
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.member-avatar {
+  width: 48px;
+  height: 48px;
+}
+@media (min-width: 600px) {
+  .member-avatar {
+    width: 64px;
+    height: 64px;
+  }
+}
+@media (min-width: 960px) {
+  .member-avatar {
+    width: 80px;
+    height: 80px;
   }
 }
 </style>
